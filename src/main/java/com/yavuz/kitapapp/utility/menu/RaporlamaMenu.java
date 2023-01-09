@@ -55,6 +55,7 @@ public class RaporlamaMenu implements IMenu{
                 Long musteriId = scanner.nextLong();
                 CONTROLLER.kiralananKitapListesi()
                         .stream()
+                        .filter(k -> k.getKiralayanMusteri().getId().equals(musteriId))
                         .map(k -> k.getKiralayanMusteri()).collect(Collectors.toList())
                         .forEach(m -> m.getKiralananKitaplar().forEach(System.out::println));
                 break;
