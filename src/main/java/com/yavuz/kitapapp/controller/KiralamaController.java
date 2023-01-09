@@ -14,4 +14,10 @@ public class KiralamaController {
         kitapService = new KitapService();
         musteriService = new MusteriService();
     }
+
+    public KiralamaController(KasiyerService kasiyerService, KitapService kitapService, MusteriService musteriService) {
+        this.kasiyerService = kasiyerService;
+        this.kitapService = kitapService;
+        this.musteriService = musteriService;
+    }
 }

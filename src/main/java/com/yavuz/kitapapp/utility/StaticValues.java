@@ -1,8 +1,12 @@
 package com.yavuz.kitapapp.utility;
 
+import com.yavuz.kitapapp.controller.KiralamaController;
 import com.yavuz.kitapapp.entity.Kasiyer;
 import com.yavuz.kitapapp.entity.Kitap;
 import com.yavuz.kitapapp.entity.Musteri;
+import com.yavuz.kitapapp.service.KasiyerService;
+import com.yavuz.kitapapp.service.KitapService;
+import com.yavuz.kitapapp.service.MusteriService;
 import com.yavuz.log.DosyaIslemleri;
 
 import java.util.ArrayList;
@@ -12,6 +16,8 @@ import java.util.Scanner;
 public class StaticValues {
     // Sabitler
     public static final DosyaIslemleri DS = new DosyaIslemleri();
+    public static final KiralamaController CONTROLLER = new KiralamaController(
+            new KasiyerService(), new KitapService(), new MusteriService());
     public static final List<Kasiyer> KASIYER_LISTESI = new ArrayList<>();
     public static final List<Kitap> KITAP_LISTESI = new ArrayList<>();
     public static final List<Musteri> MUSTERI_LISTESI = new ArrayList<>();
