@@ -5,6 +5,7 @@ public class Kitap extends BaseEntity {
     private boolean kiralalabilir;
 
     public Kitap(String isim, boolean kiralalabilir){
+        super();
         this.isim = isim;
         this.kiralalabilir = kiralalabilir;
     }

@@ -8,6 +8,7 @@ public class Kasiyer extends BaseEntity {
     private List<Kitap> kiralananKitaplar;
 
     public Kasiyer(String isim) {
+        super();
         this.isim = isim;
         kiralananKitaplar = new ArrayList<>();
     }

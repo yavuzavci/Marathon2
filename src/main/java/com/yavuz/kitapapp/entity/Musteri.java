@@ -8,6 +8,7 @@ public class Musteri extends BaseEntity {
     private List<Kitap> kiralananKitaplar;
 
     public Musteri(String isim) {
+        super();
         this.isim = isim;
         kiralananKitaplar = new ArrayList<>();
     }
