@@ -12,7 +12,7 @@ public class DosyaIslemleri {
     public void createLog(Log log){
         try {
             String fileName  = UUID.randomUUID().toString();
-            FileOutputStream file = new FileOutputStream("c:/LogData/Marathon2" + fileName + ".log");
+            FileOutputStream file = new FileOutputStream("c:/LogData/Marathon2/" + fileName + ".log");
             ObjectOutputStream logStream = new ObjectOutputStream(file);
             logStream.writeObject(log);
             logStream.close();
@@ -23,7 +23,7 @@ public class DosyaIslemleri {
 
     public Optional<Log> getLogFile(String logFileUuid){
         try {
-            FileInputStream file = new FileInputStream("c:/LogData/Marathon2" + logFileUuid + ".log");
+            FileInputStream file = new FileInputStream("c:/LogData/Marathon2/" + logFileUuid + ".log");
             ObjectInputStream logStream = new ObjectInputStream(file);
             Log log = (Log) logStream.readObject();
             logStream.close();
