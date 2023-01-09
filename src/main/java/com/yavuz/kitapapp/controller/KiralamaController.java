@@ -6,6 +6,7 @@ import com.yavuz.kitapapp.entity.Musteri;
 import com.yavuz.kitapapp.service.KasiyerService;
 import com.yavuz.kitapapp.service.KitapService;
 import com.yavuz.kitapapp.service.MusteriService;
+import com.yavuz.log.Log;
 
 import java.util.List;
 import java.util.Objects;
@@ -32,54 +33,124 @@ public class KiralamaController {
     }
 
     public void kasiyerEkle(){
-        String isim = kasiyerIsmiAl();
-        Kasiyer kasiyer = new Kasiyer(isim);
-        kasiyerService.save(kasiyer);
+        try{
+            String isim = kasiyerIsmiAl();
+            Kasiyer kasiyer = new Kasiyer(isim);
+            kasiyerService.save(kasiyer);
+        }
+        catch (Exception exception){
+            System.out.println("HATA");
+            System.out.println(exception);
+            DS.createLog(new Log(
+                    exception.getMessage(),
+                    1,
+                    KiralamaController.class.getSimpleName(),
+                    "kasiyerEkle",
+                    System.currentTimeMillis(),
+                    "kasiyer ekleme hatası"
+            ));
+        }
     }
 
     public void kitapEkle(){
-        String isim = kitapIsmiAl();
-        boolean kiralama = kiralamaBilgisiAl();
-        Kitap kitap = new Kitap(isim,kiralama);
-        kitapService.save(kitap);
+        try{
+            String isim = kitapIsmiAl();
+            boolean kiralama = kiralamaBilgisiAl();
+            Kitap kitap = new Kitap(isim,kiralama);
+            kitapService.save(kitap);
+        }
+        catch (Exception exception){
+            System.out.println("HATA");
+            System.out.println(exception);
+            DS.createLog(new Log(
+                    exception.getMessage(),
+                    2,
+                    KiralamaController.class.getSimpleName(),
+                    "kitapEkle",
+                    System.currentTimeMillis(),
+                    "kitap ekleme hatası"
+            ));
+        }
     }
 
     public void musteriEkle(){
-        String isim = musteriIsmiAl();
-        Musteri musteri = new Musteri(isim);
-        musteriService.save(musteri);
+        try{
+            String isim = musteriIsmiAl();
+            Musteri musteri = new Musteri(isim);
+            musteriService.save(musteri);
+        }
+        catch (Exception exception){
+            System.out.println("HATA");
+            System.out.println(exception);
+            DS.createLog(new Log(
+                    exception.getMessage(),
+                    3,
+                    KiralamaController.class.getSimpleName(),
+                    "musteriEkle",
+                    System.currentTimeMillis(),
+                    "müşteri ekleme hatası"
+            ));
+        }
     }
 
     public void kiralamaYap() {
-        Kasiyer kasiyer = kasiyerBul();
-        System.out.println("Lütfen kiralama yapmak istediğiniz kitabın numarasını giriniz.");
-        Long kitapId = scanner.nextLong();
-        Kitap kitap = kitapAra(kitapId);
-        System.out.println("Lütfen kitabın kiralanacağı müşterinin numarasını giriniz.");
-        Long musteriId = scanner.nextLong();
-        Musteri musteri = musteriAra(musteriId);
-        if(kitap.isKiralanabilir())
-            kitap.setKiranalabilir(false);
-        if(Objects.isNull(kitap.getKiralayanKasiyer()))
-            kitap.setKiralayanKasiyer(kasiyer);
-        if(Objects.isNull(kitap.getKiralayanMusteri()))
-            kitap.setKiralayanMusteri(musteri);
+        try{
+            Kasiyer kasiyer = kasiyerBul();
+            System.out.println("Lütfen kiralama yapmak istediğiniz kitabın numarasını giriniz.");
+            Long kitapId = scanner.nextLong();
+            Kitap kitap = kitapAra(kitapId);
+            System.out.println("Lütfen kitabın kiralanacağı müşterinin numarasını giriniz.");
+            Long musteriId = scanner.nextLong();
+            Musteri musteri = musteriAra(musteriId);
+            if(kitap.isKiralanabilir())
+                kitap.setKiranalabilir(false);
+            if(Objects.isNull(kitap.getKiralayanKasiyer()))
+                kitap.setKiralayanKasiyer(kasiyer);
+            if(Objects.isNull(kitap.getKiralayanMusteri()))
+                kitap.setKiralayanMusteri(musteri);
 
-        kasiyer.getKiralananKitaplar().add(kitap);
-        musteri.getKiralananKitaplar().add(kitap);
+            kasiyer.getKiralananKitaplar().add(kitap);
+            musteri.getKiralananKitaplar().add(kitap);
+        }
+        catch (Exception exception){
+            System.out.println("HATA");
+            System.out.println(exception);
+            DS.createLog(new Log(
+                    exception.getMessage(),
+                    4,
+                    KiralamaController.class.getSimpleName(),
+                    "kiralamaYap",
+                    System.currentTimeMillis(),
+                    "kiralama hatası"
+            ));
+        }
     }
 
     public void kitapIadesiYap() {
-        Kasiyer kasiyer = kasiyerBul();
-        System.out.println("Lütfen iade yapmak istediğiniz kitabın numarasını giriniz.");
-        Long kitapId = scanner.nextLong();
-        Kitap kitap = kitapAra(kitapId);
-        if(!kitap.isKiralanabilir())
-            kitap.setKiranalabilir(true);
+        try{
+            Kasiyer kasiyer = kasiyerBul();
+            System.out.println("Lütfen iade yapmak istediğiniz kitabın numarasını giriniz.");
+            Long kitapId = scanner.nextLong();
+            Kitap kitap = kitapAra(kitapId);
+            if(!kitap.isKiralanabilir())
+                kitap.setKiranalabilir(true);
 
-        kitap.setKiralayanKasiyer(kasiyer);
-        kitap.setKiralayanMusteri(null);
-        kitapService.update(kitap);
+            kitap.setKiralayanKasiyer(kasiyer);
+            kitap.setKiralayanMusteri(null);
+            kitapService.update(kitap);
+        }
+        catch (Exception exception){
+            System.out.println("HATA");
+            System.out.println(exception);
+            DS.createLog(new Log(
+                    exception.getMessage(),
+                    5,
+                    KiralamaController.class.getSimpleName(),
+                    "kitapEkle",
+                    System.currentTimeMillis(),
+                    "kitap iade hatası"
+            ));
+        }
     }
 
     public Kitap kitapAra(Long id) {
