@@ -1,4 +1,4 @@
-package com.yavuz;
+package com.yavuz.kitapapp;
 
 public class Main {
     public static void main(String[] args) {
