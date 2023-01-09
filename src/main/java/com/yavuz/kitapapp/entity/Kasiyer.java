@@ -34,7 +34,6 @@ public class Kasiyer extends BaseEntity {
         return "Kasiyer{" +
                 "id='" + getId() + '\'' +
                 ", isim='" + isim + '\'' +
-                ", kiralananKitaplar=" + kiralananKitaplar +
                 '}';
     }
 }

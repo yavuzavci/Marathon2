@@ -34,7 +34,6 @@ public class Musteri extends BaseEntity {
         return "Musteri{" +
                 "id='" + getId() + '\'' +
                 ", isim='" + isim + '\'' +
-                ", kiralananKitaplar=" + kiralananKitaplar +
                 '}';
     }
 }

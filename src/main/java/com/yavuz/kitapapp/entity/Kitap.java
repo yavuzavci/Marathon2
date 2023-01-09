@@ -2,12 +2,24 @@ package com.yavuz.kitapapp.entity;
 
 public class Kitap extends BaseEntity {
     private String isim;
-    private boolean kiralalabilir;
+    private boolean kiralanabilir;
+    private Kasiyer kiralayanKasiyer;
+    private Musteri kiralayanMusteri;
 
-    public Kitap(String isim, boolean kiralalabilir){
+    public Kitap(String isim, boolean kiralanabilir){
         super();
         this.isim = isim;
-        this.kiralalabilir = kiralalabilir;
+        this.kiralanabilir = kiralanabilir;
+        kiralayanKasiyer = null;
+        kiralayanMusteri = null;
+    }
+
+    public Kitap(String isim, boolean kiralanabilir, Kasiyer kiralayanKasiyer, Musteri kiralayanMusteri) {
+        super();
+        this.isim = isim;
+        this.kiralanabilir = kiralanabilir;
+        this.kiralayanKasiyer = kiralayanKasiyer;
+        this.kiralayanMusteri = kiralayanMusteri;
     }
 
     public String getIsim() {
@@ -18,12 +30,28 @@ public class Kitap extends BaseEntity {
         this.isim = isim;
     }
 
-    public boolean isKiralalabilir() {
-        return kiralalabilir;
+    public boolean isKiralanabilir() {
+        return kiralanabilir;
     }
 
-    public void setKiralalabilir(boolean kiralalabilir) {
-        this.kiralalabilir = kiralalabilir;
+    public void setKiranalabilir(boolean kiralanabilir) {
+        this.kiralanabilir = kiralanabilir;
+    }
+
+    public Kasiyer getKiralayanKasiyer() {
+        return kiralayanKasiyer;
+    }
+
+    public void setKiralayanKasiyer(Kasiyer kiralayanKasiyer) {
+        this.kiralayanKasiyer = kiralayanKasiyer;
+    }
+
+    public Musteri getKiralayanMusteri() {
+        return kiralayanMusteri;
+    }
+
+    public void setKiralayanMusteri(Musteri kiralayanMusteri) {
+        this.kiralayanMusteri = kiralayanMusteri;
     }
 
     @Override
@@ -31,7 +59,9 @@ public class Kitap extends BaseEntity {
         return "Kitap{" +
                 "id='" + getId() + '\'' +
                 ", isim='" + isim + '\'' +
-                ", kiralalabilir=" + kiralalabilir +
+                ", kiralanabilir=" + kiralanabilir +
+                ", kiralayanKasiyer=" + kiralayanKasiyer +
+                ", kiralayanMusteri=" + kiralayanMusteri +
                 '}';
     }
 }
