@@ -8,11 +8,11 @@ import com.yavuz.kitapapp.service.KitapService;
 import com.yavuz.kitapapp.service.MusteriService;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.yavuz.kitapapp.utility.KiralamaUtility.*;
-import static com.yavuz.kitapapp.utility.StaticValues.KITAP_LISTESI;
-import static com.yavuz.kitapapp.utility.StaticValues.MUSTERI_LISTESI;
+import static com.yavuz.kitapapp.utility.StaticValues.*;
 
 public class KiralamaController {
     private final KasiyerService kasiyerService;
@@ -50,10 +50,36 @@ public class KiralamaController {
         musteriService.save(musteri);
     }
 
-    public void kiralamaYap(Kasiyer kasiyer, Kitap kitap, Musteri musteri) {
-        kitap.setKiranalabilir(false);
+    public void kiralamaYap() {
+        Kasiyer kasiyer = kasiyerBul();
+        System.out.println("Lütfen kiralama yapmak istediğiniz kitabın numarasını giriniz.");
+        Long kitapId = scanner.nextLong();
+        Kitap kitap = kitapAra(kitapId);
+        System.out.println("Lütfen kitabın kiralanacağı müşterinin numarasını giriniz.");
+        Long musteriId = scanner.nextLong();
+        Musteri musteri = musteriAra(musteriId);
+        if(kitap.isKiralanabilir())
+            kitap.setKiranalabilir(false);
+        if(Objects.isNull(kitap.getKiralayanKasiyer()))
+            kitap.setKiralayanKasiyer(kasiyer);
+        if(Objects.isNull(kitap.getKiralayanMusteri()))
+            kitap.setKiralayanMusteri(musteri);
+
         kasiyer.getKiralananKitaplar().add(kitap);
         musteri.getKiralananKitaplar().add(kitap);
+    }
+
+    public void kitapIadesiYap() {
+        Kasiyer kasiyer = kasiyerBul();
+        System.out.println("Lütfen iade yapmak istediğiniz kitabın numarasını giriniz.");
+        Long kitapId = scanner.nextLong();
+        Kitap kitap = kitapAra(kitapId);
+        if(!kitap.isKiralanabilir())
+            kitap.setKiranalabilir(true);
+
+        kitap.setKiralayanKasiyer(kasiyer);
+        kitap.setKiralayanMusteri(null);
+        kitapService.update(kitap);
     }
 
     public Kitap kitapAra(Long id) {
